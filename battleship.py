@@ -1,0 +1,1 @@
+print("Welcome to Battleship. Created using Python.")
