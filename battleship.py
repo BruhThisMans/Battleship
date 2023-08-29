@@ -64,7 +64,7 @@ Computer = Board("Computer")
 Base = Board("Base")
 i1 = input("What is your name? ")
 Player = Board(i1)
-
+LetterList = ["A","B","C","D","E","F","G","H","I","J"]
 # Functions
 
 # This function is not necessarily needed but it improves code readability
@@ -87,6 +87,17 @@ def start_game():
     print("To start attacking, you will be asked to enter in a row letter then a column number.")
     time.sleep(0.25)
 
+def check_board(iboard,winner):
+    global LetterList
+    global game_won
+    count = 0
+    for key, value in iboard.brd.items():
+        if key in LetterList and not 1 in value:
+            count += 1
+        if count == 10:
+            print(winner.name + " has won the game!")
+            game_won = True
+            break
 
 def place_move(Player, Computer, Base):
     global game_won
@@ -119,17 +130,12 @@ def place_move(Player, Computer, Base):
                 print("The computer missed you!")
 
         
-        if all(value == 'X' or value == 'M' or value == 0 for row in Computer.brd.values() for value in row):
-            print(Player.name + " has won the game!")
-            game_won = True
-            break
-
-        if all(value == 'X' or value == 'M' or value == 0 for row in Player.brd.values() for value in row):
-            print("The computer has won the game!")
-            game_won = True
-            break
+        check_board(Computer,Player)
+        check_board(Player,Computer)
 
         count += 1
+
+
 
 start_game()
 place_move(Player, Computer, Base)
