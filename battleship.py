@@ -38,7 +38,7 @@ class Board:
                     row = random.choice(list(self.brd.keys()))
                     col = random.randint(0, 11 - ship_size)
                     
-                    if col + ship_size <= 10:
+                    if col + ship_size <= 10-1:
                         valid_placement = all(self.brd[row][col + i] == 0 for i in range(ship_size))
                         if valid_placement:
                             for i in range(ship_size):
@@ -48,8 +48,7 @@ class Board:
                     valid_rows = list(self.brd.keys())[1:12 - ship_size]
                     row_index = random.randint(0, len(valid_rows) - ship_size)
                     row = valid_rows[row_index]
-                    col = random.randint(0, 10)
-                    
+                    col = random.randint(0, 9)
                     if ord(row) + ship_size - 1 <= ord('K'):
                         valid_placement = all(self.brd[chr(ord(row) + i)][col] == 0 for i in range(ship_size))
                         if valid_placement:
@@ -65,6 +64,7 @@ Base = Board("Base")
 i1 = input("What is your name? ")
 Player = Board(i1)
 LetterList = ["A","B","C","D","E","F","G","H","I","J"]
+
 # Functions
 
 # This function is not necessarily needed but it improves code readability
@@ -80,7 +80,7 @@ def start_game():
     Computer.generate_board()
     Base.show_board()
     print(" ")
-    print("Enemy Board /\ Player Board \/")
+    print("Player Base Board When Attacking /\ Player Board \/")
     print(" ")
     Player.show_board()
     time.sleep(0.5)
@@ -110,12 +110,12 @@ def place_move(Player, Computer, Base):
                 if Computer.access_element(in1, in2) == 1:
                     Base.modify_element(in1, in2, 'X')
                     Computer.modify_element(in1, in2, 'X')
-                    Computer.show_board()
+                    Base.show_board()
                     print("Ship hit!")
                 elif Computer.access_element(in1, in2) == 0:
                     Base.modify_element(in1, in2, 'M')
                     Computer.modify_element(in1, in2, 'M')
-                    Computer.show_board()
+                    Base.show_board()
                     print("Miss!")
             else:
                 print("Invalid input. Please enter a valid row letter (A-J) and column number (0-9).")
